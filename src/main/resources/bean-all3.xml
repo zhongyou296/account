@@ -5,6 +5,9 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
+    <!--
+        思想:Spring所支持的tx:advice+aop命名空间的声明式事务管理
+        -->
     <!--service层的bean-->
     <bean id="accountService" class="com.wqm.demo3.service.AccountServiceImpl">
         <property name="accountDAO" ref="accountDAO"/>

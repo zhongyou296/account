@@ -4,7 +4,10 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:property-placeholder location="filter.properties"/>
+    <!--
+        思想:spring所支持的ProxyFactoryBean+XML配置的声明式事务管理
+        -->
+
     <!--service层的bean-->
     <bean id="accountService" class="com.wqm.demo2.service.AccountServiceImpl">
         <property name="accountDAO" ref="accountDAO"/>
