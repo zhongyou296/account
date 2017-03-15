@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="filter.properties"/>
+    <!--service层的bean-->
+    <bean id="accountService" class="com.wqm.demo2.service.AccountServiceImpl">
+        <property name="accountDAO" ref="accountDAO"/>
+    </bean>
+
+    <!--dao层的bean-->
+    <bean id="accountDAO" class="com.wqm.demo2.dao.AccountDAOImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+
+    <!--spring为了简化数据库操作而提供的模板类-->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <constructor-arg name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--配置事务管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--所有事务代理操作类的父类-->
+    <bean id="baseTransactionProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+          abstract="true">
+        <property name="transactionManager" ref="transactionManager"/>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="insert*">PROPAGATION_REQUIRED</prop>
+                <prop key="update*">PROPAGATION_REQUIRED</prop>
+                <prop key="*">PROPAGATION_REQUIRED</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!--代理类,使用了SpringAOP的面向切面编程,连接点是accountService对象中的所有方法-->
+    <bean id="accountServiceProxy" parent="baseTransactionProxy">
+        <property name="target" ref="accountService"/>
+    </bean>
+
+    <import resource="spring-dataSource.xml"/>
+</beans>

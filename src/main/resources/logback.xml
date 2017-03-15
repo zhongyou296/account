@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <!--日志输出位置-->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <target>System.out</target>
+        <encoder>
+            <pattern>%d %p [%t] %c{20} %X{traceId:--} %m%n</pattern>
+            <charset class="java.nio.charset.Charset">UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--根类日志收集器的输出位置为标准输出-->
+    <root level="${root.level}">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
