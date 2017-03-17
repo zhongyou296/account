@@ -15,7 +15,7 @@
 
     <!--dao层的bean-->
     <bean id="accountDAO" class="com.wqm.demo4.dao.AccountDAOImpl">
-        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+        <property name="dataSource" ref="dataSource"/>
     </bean>
 
     <!--spring为了简化数据库操作而提供的模板类-->
